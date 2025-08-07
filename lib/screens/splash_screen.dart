@@ -1,4 +1,5 @@
-import 'package:day2_course/screens/my_home_page.dart';
+// import 'package:day2_course/screens/my_home_page.dart';
+import 'package:day2_course/screens/on_boarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -32,30 +33,30 @@ class _SplashScreenState extends State<SplashScreen>
       CurvedAnimation(parent: _animationController, curve: Curves.elasticOut),
     );
 
-    // _startAnimation();
+    _startAnimation();
   }
 
   _startAnimation() async {
     await _animationController.forward();
-    // await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
-    // if (mounted) {
-    //   Navigator.of(context).pushReplacement(
-    //     PageRouteBuilder(
-    //       pageBuilder: (context, animation, secondaryAnimation) =>
-    //           const MyHomePage(title: 'Flutter Demo Home Page'),
-    //       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    //         return FadeTransition(opacity: animation, child: child);
-    //       },
-    //     ),
-    //   );
-    // }
+    if (mounted) {
+      Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => OnBoarding(),
+          // const MyHomePage(title: 'Flutter Demo Home Page'),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+        ),
+      );
+    }
   }
 
   @override
   void dispose() {
-    // _animationController.dispose();
-    // super.dispose();
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -64,32 +65,34 @@ class _SplashScreenState extends State<SplashScreen>
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      // body: AnimatedBuilder(
-      // animation: _animationController,
-      // builder: (context, child) {
-      // return
-      body:
-          // child: FadeTransition(
-          // opacity: _fadeAnimation,
-          // child: ScaleTransition(
-          // scale: _scaleAnimation,
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: height * 0.230),
-                SvgPicture.asset(
-                  "assets/image/splash_images/logo.svg",
-                  width: width * 0.34,
-                  height: height * 0.34,
+      body: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, child) {
+          return FadeTransition(
+            opacity: _fadeAnimation,
+            child: ScaleTransition(
+              scale: _scaleAnimation,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: height * 0.230),
+                    SvgPicture.asset(
+                      "assets/image/splash_images/logo.svg",
+                      width: width * 0.34,
+                      height: height * 0.34,
+                    ),
+                    SizedBox(height: 10),
+                    Text("Paperback.", style: theme.textTheme.displayLarge),
+                  ],
                 ),
-                SizedBox(height: 10),
-                Text("Paperback.", style: theme.textTheme.displayLarge),
-              ],
+              ),
             ),
-          ),
+          );
+        },
+      ),
     );
   }
 }

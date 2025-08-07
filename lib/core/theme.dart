@@ -90,7 +90,7 @@ class PaperbackTheme {
 
       // Body medium - 14px, Karla, Regular
       bodyMedium: TextStyle(
-        fontFamily: 'Newsreader',
+        fontFamily: 'Karla',
         fontSize: 14,
         fontWeight: FontWeight.w400,
         color: white,
@@ -99,7 +99,7 @@ class PaperbackTheme {
 
       // Body small - 12px, Karla, Regular
       bodySmall: TextStyle(
-        fontFamily: 'Newsreader',
+        fontFamily: 'Karla',
         fontSize: 12,
         fontWeight: FontWeight.w400,
         color: textDark,
@@ -115,7 +115,7 @@ class PaperbackTheme {
       ),
 
       titleMedium: TextStyle(
-        fontFamily: 'Newsreader',
+        fontFamily: 'Karla',
         fontSize: 16,
         fontWeight: FontWeight.w500,
         color: white,
@@ -181,14 +181,14 @@ class PaperbackTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryRed,
           foregroundColor: white,
-          elevation: 0,
+
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(23),
           ),
           textStyle: const TextStyle(
-            fontFamily: 'Newsreader',
-            fontSize: 16,
+            fontFamily: 'Karla',
+            fontSize: 18,
             fontWeight: FontWeight.w500,
             letterSpacing: 0.1,
           ),
@@ -308,4 +308,13 @@ extension PaperbackColors on ColorScheme {
 // Extension for custom gradients
 extension PaperbackGradients on ThemeData {
   LinearGradient get primaryGradient => PaperbackTheme.primaryGradient;
+}
+
+extension TitleTheme on ThemeData {
+  TextStyle get titleStyle => TextStyle(
+    fontFamily: "Newsreader",
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: PaperbackTheme.bgDarker,
+  );
 }
