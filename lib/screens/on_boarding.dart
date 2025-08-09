@@ -14,9 +14,9 @@ class _OnBoardingState extends State<OnBoarding> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
+    return 
+   
+Scaffold(
         appBar: AppBar(
           elevation: 0,
           title: Text("Paperback.", style: theme.titleStyle),
@@ -93,7 +93,7 @@ class _OnBoardingState extends State<OnBoarding> {
             ),
           ),
         ),
-      ),
+    
     );
   }
 }

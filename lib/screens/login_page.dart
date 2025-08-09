@@ -17,20 +17,35 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Center(
         child: Container(
-          padding: EdgeInsets.all(Helper.responsiveHeight(context, height: 50)),
+          padding: EdgeInsets.symmetric(
+            horizontal: Helper.getResponsiveHeight(context, height: 32),
+          ),
+          margin: EdgeInsets.only(
+            top: Helper.getResponsiveHeight(context, height: 98),
+          ),
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+
               children: [
+                Text(
+                  "Login",
+                  style: theme.textTheme.displayLarge?.copyWith(
+                    fontSize: Helper.getResponsiveFontSize(
+                      context,
+                      fontSize: 40,
+                    ),
+                  ),
+                ),
                 CustomTextFieldSection(
                   label: "Email",
-                  placeholderText: "Plant@gmail.com",
+                  placeholderText: "Enter your email",
                   icon: "assets/image/login_images/email_icon.svg",
                   type: "email",
                   validateFunction: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return 'Please enter your email';
                     }
                     return null;
                   },
@@ -38,18 +53,18 @@ class _LoginPageState extends State<LoginPage> {
                 CustomTextFieldSection(
                   label: "Password",
                   placeholderText: "Enter your password",
-                  icon: "assets/image/login_images/email_icon.svg",
+                  icon: "assets/image/login_images/pass_icon.svg",
                   type: "Password",
                   validateFunction: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return 'Please enter your password';
                     }
                     return null;
                   },
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    vertical: Helper.responsiveHeight(context, height: 24),
+                    vertical: Helper.getResponsiveHeight(context, height: 24),
                   ),
                   child: ElevatedButton(
                     onPressed: () {
@@ -62,7 +77,19 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       }
                     },
-                    child: const Text('Submit'),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Helper.getResponsiveWidth(
+                          context,
+                          width: 104,
+                        ),
+                        vertical: Helper.getResponsiveWidth(context, width: 4),
+                      ),
+                      child: Text(
+                        'Log in',
+                        style: theme.textTheme.displaySmall,
+                      ),
+                    ),
                   ),
                 ),
               ],
