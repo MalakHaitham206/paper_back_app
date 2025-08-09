@@ -29,7 +29,7 @@ class Helper {
   }
 
   static double _getScaleFactor(BuildContext context) {
-    double screenWidth = MediaQuery.sizeOf(context).width;
+    double screenWidth = MediaQuery.of(context).size.width;
     if (screenWidth < 600) {
       return screenWidth / 400;
     } else if (screenWidth < 900) {

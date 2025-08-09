@@ -1,7 +1,8 @@
 import 'package:day2_course/core/widgets/custom_text_field_section.dart';
-import 'package:day2_course/core/widgets/helper.dart';
-import 'package:day2_course/screens/my_home_page.dart';
+import 'package:day2_course/core/helper.dart';
+import 'package:day2_course/model/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,12 +12,21 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool rememberMe = false;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       body: Center(
         child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.fitWidth,
+              image: AssetImage(
+                "assets/image/login_images/login_background.png",
+              ),
+            ),
+          ),
           padding: EdgeInsets.symmetric(
             horizontal: Helper.getResponsiveHeight(context, height: 32),
           ),
@@ -62,18 +72,62 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.all(
+                              Radius.circular(3),
+                            ),
+                          ),
+                          value: rememberMe,
+                          onChanged: (checked) {
+                            setState(() {
+                              checked == true
+                                  ? rememberMe = true
+                                  : rememberMe = false;
+                            });
+                          },
+                        ),
+                        Text(
+                          "Remember me",
+                          style: theme.textTheme.bodyLarge?.copyWith(
+                            fontSize: Helper.getResponsiveFontSize(
+                              context,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Forgot Password?",
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontSize: Helper.getResponsiveFontSize(
+                            context,
+                            fontSize: 15,
+                          ),
+                          color: theme.colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: Helper.getResponsiveHeight(context, height: 24),
+                  padding: EdgeInsets.only(
+                    top: Helper.getResponsiveHeight(context, height: 24),
                   ),
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                MyHomePage(title: "welcome to home page"),
-                          ),
+                        Navigator.of(context).pushReplacementNamed(
+                          'home/',
+                          arguments: UserInfo(id: 200, userName: "nader"),
                         );
                       }
                     },
@@ -81,16 +135,107 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.symmetric(
                         horizontal: Helper.getResponsiveWidth(
                           context,
-                          width: 104,
+                          width: 100,
                         ),
                         vertical: Helper.getResponsiveWidth(context, width: 4),
                       ),
                       child: Text(
                         'Log in',
-                        style: theme.textTheme.displaySmall,
+                        style: theme.textTheme.displaySmall?.copyWith(
+                          fontSize: Helper.getResponsiveFontSize(
+                            context,
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
                     ),
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account?",
+                      style: theme.textTheme.bodyLarge?.copyWith(height: 0),
+                    ),
+
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'register/');
+                      },
+                      child: Text(
+                        "Sign up",
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: theme.colorScheme.primary,
+                          fontWeight: FontWeight.w600,
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: Helper.getResponsiveHeight(context, height: 16),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Spacer(),
+                      Container(
+                        color: theme.colorScheme.outline,
+                        width: Helper.getResponsiveWidth(
+                          context,
+                          width: 134.65,
+                        ),
+                        height: Helper.getResponsiveHeight(context, height: 2),
+                      ),
+                      Spacer(),
+                      Text(
+                        "Or",
+                        style: theme.textTheme.bodyLarge?.copyWith(height: 0),
+                      ),
+                      Spacer(),
+                      Container(
+                        color: theme.colorScheme.outline,
+                        width: Helper.getResponsiveWidth(
+                          context,
+                          width: 134.65,
+                        ),
+                        height: Helper.getResponsiveHeight(context, height: 2),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        "assets/image/login_images/google_icon.svg",
+                        width: Helper.getResponsiveWidth(context, width: 20),
+                        height: Helper.getResponsiveHeight(context, height: 25),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        "assets/image/login_images/facebook_logo.svg",
+                        width: Helper.getResponsiveWidth(context, width: 20),
+                        height: Helper.getResponsiveHeight(context, height: 25),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        "assets/image/login_images/apple_icon.svg",
+                        width: Helper.getResponsiveWidth(context, width: 20),
+                        height: Helper.getResponsiveHeight(context, height: 25),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

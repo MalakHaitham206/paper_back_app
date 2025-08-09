@@ -184,7 +184,7 @@ class PaperbackTheme {
 
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(23),
+            borderRadius: BorderRadius.circular(32),
           ),
           textStyle: const TextStyle(
             fontFamily: 'Karla',
