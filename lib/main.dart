@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         "login/": (context) => LoginPage(),
         'register/': (context) => RegisterPage(),
         'onboarding/': (context) => OnBoarding(),
-        'home/': (context) => RootPage(),
+        'home/': (context) => TheHomeRootPage(),
         'userProfile/': (context) => UserProfile(),
       },
       debugShowCheckedModeBanner: false,
