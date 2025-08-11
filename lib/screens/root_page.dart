@@ -16,20 +16,20 @@ class TheHomeRootPage extends StatefulWidget {
 }
 
 class _RootPage extends State<TheHomeRootPage> {
-  int _selectedIndex = 0;
-
-  // List of icon paths for cleaner code
   final List<String> _iconPaths = [
     "assets/image/home_images/bottom_nav_home_icon.svg",
     "assets/image/home_images/bottom_nav_save_icon.svg",
     "assets/image/home_images/bottom_nav_search_icon.svg",
     "assets/image/home_images/bottom_nav_bag_icon.svg",
   ];
-  var isChecked = true;
-  String? selectedOption = "option1";
-  var isEnabled = true;
+
   int navIndex = 0;
-  List<Widget> pages = [MyHomePage(), SearchPage(), SavedItemsPage()];
+  List<Widget> pages = [
+    MyHomePage(),
+    SavedItemsPage(),
+    SearchPage(),
+    SavedItemsPage(),
+  ];
 
   @override
   void initState() {
@@ -41,40 +41,35 @@ class _RootPage extends State<TheHomeRootPage> {
   Widget build(BuildContext context) {
     UserInfo? userData = ModalRoute.of(context)?.settings.arguments as UserInfo;
     final theme = Theme.of(context);
-    Map<String, VoidCallback?> items = {
-      '': null, // or remove this empty entry entirely
+    Map<String, VoidCallback> items = {
+      '': () {},
       "Profile": () {
-        Navigator.pop(context); // Close drawer first
+        Navigator.pop(context);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ProfilePage()),
         );
       },
       "Recents": () {
-        // Add your logic here
         Navigator.pop(context);
       },
       "saved items": () {
-        // Add your logic here
         Navigator.pop(context);
       },
       "Settings": () {
-        // Add your logic here
         Navigator.pop(context);
       },
       "Notifications": () {
-        // Add your logic here
         Navigator.pop(context);
       },
       "Listen Later": () {
-        // Add your logic here
         Navigator.pop(context);
       },
       "Help": () {
-        // Add your logic here
         Navigator.pop(context);
       },
     };
+
     List<Icon?> drawIcons = [
       null,
       Icon(Icons.person),
@@ -85,8 +80,51 @@ class _RootPage extends State<TheHomeRootPage> {
       Icon(Icons.watch_later_rounded),
       Icon(Icons.help),
     ];
+
     return Scaffold(
-      appBar: AppBar(title: Text("PaberBack.")),
+      appBar: AppBar(
+        actionsPadding: EdgeInsets.only(
+          right: Helper.getResponsiveHeight(context, height: 8),
+        ),
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        // scrolledUnderElevation: 0,
+        title: Text("PaberBack."),
+
+        actions: [
+          IconButton(
+            iconSize: Helper.getResponsiveWidth(context, width: 24),
+            onPressed: () {},
+            icon: Icon(Icons.notifications),
+          ),
+          userData.userImage != null
+              ? IconButton(
+                  iconSize: Helper.getResponsiveWidth(context, width: 16),
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.person,
+                    size: Helper.getResponsiveWidth(context, width: 24),
+                  ),
+                  style: ButtonStyle(
+                    iconColor: WidgetStatePropertyAll(
+                      const Color.fromARGB(255, 218, 218, 218),
+                    ),
+                    backgroundColor: WidgetStatePropertyAll(
+                      const Color.fromARGB(255, 89, 89, 89),
+                    ),
+                  ),
+                )
+              : IconButton(
+                  onPressed: () {},
+                  icon: Image.asset(
+                    "assets/image/home_images/user_image.png",
+                    width: Helper.getResponsiveWidth(context, width: 36),
+                    height: Helper.getResponsiveHeight(context, height: 36),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+        ],
+      ),
       drawer: Drawer(
         child: ListView.builder(
           itemCount: items.length,
@@ -99,15 +137,12 @@ class _RootPage extends State<TheHomeRootPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Icon(
-                          Icons.account_circle_rounded,
-                          size: Helper.getResponsiveWidth(context, width: 50),
-                        ),
+                      Icon(
+                        Icons.account_circle_rounded,
+                        size: Helper.getResponsiveWidth(context, width: 50),
                       ),
                       Text(
-                        "${userData.userName[0].toUpperCase()}${userData.userName.substring(1)}",
+                        "${userData.userName[0].toUpperCase()}${userData.userName.substring(1).toLowerCase()}",
                         textAlign: TextAlign.left,
                       ),
                       Text(
@@ -124,6 +159,8 @@ class _RootPage extends State<TheHomeRootPage> {
             } else {
               return ListTile(
                 leading: drawIcons[index],
+                // index: 2
+                //["","profile","Recent","saved items"]
                 title: Text(items.keys.toList()[index]),
                 onTap: items.values.toList()[index],
               );
@@ -131,13 +168,12 @@ class _RootPage extends State<TheHomeRootPage> {
           },
         ),
       ),
-      backgroundColor: Colors.black26,
+
       body: pages[navIndex],
       bottomNavigationBar: CustomBottomNavigationBar(
-        selectedIndex: _selectedIndex,
-        onTap: (index) => setState(() => _selectedIndex = index),
+        selectedIndex: navIndex,
+        onTap: (index) => setState(() => navIndex = index),
         iconPaths: _iconPaths,
-        // Pass theme colors here
         selectedColor: Theme.of(context).colorScheme.primary,
         unselectedColor: Colors.white,
         backgroundColor: Theme.of(context).colorScheme.bgDarker,

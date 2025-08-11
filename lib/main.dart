@@ -1,5 +1,4 @@
 import 'package:day2_course/screens/login_page.dart';
-import 'package:day2_course/screens/my_home_page.dart';
 import 'package:day2_course/screens/on_boarding.dart';
 import 'package:day2_course/screens/register_page.dart';
 import 'package:day2_course/screens/root_page.dart';

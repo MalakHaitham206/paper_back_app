@@ -1,12 +1,7 @@
-import 'dart:math';
-
-import 'package:day2_course/core/theme.dart';
 import 'package:day2_course/core/helper.dart';
-import 'package:day2_course/model/user_model.dart';
-import 'package:day2_course/screens/saved_box.dart';
-import 'package:day2_course/screens/search_page.dart';
+import 'package:day2_course/core/widgets/custom_book_item.dart';
+import 'package:day2_course/model/book_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -16,122 +11,147 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePage extends State<MyHomePage> {
-  int _selectedIndex = 0;
-
-  // List of icon paths for cleaner code
-  final List<String> _iconPaths = [
-    "assets/image/home_images/bottom_nav_home_icon.svg",
-    "assets/image/home_images/bottom_nav_save_icon.svg",
-    "assets/image/home_images/bottom_nav_search_icon.svg",
-    "assets/image/home_images/bottom_nav_bag_icon.svg",
-  ];
-  var isChecked = false;
-  String? selectedOption = "option1";
-  var isEnabled = true;
-  bool _isExpanded = false;
-  @override
-  Matrix4 _transformMatrix = Matrix4.identity();
-
-  void _rotateContainer() {
-    setState(() {
-      _transformMatrix = Matrix4.rotationZ(Random().nextDouble() * pi * 2);
-    });
-  }
-
-  int navIndex = 0;
-  List<Widget> pages = [MyHomePage(), SearchPage(), SavedItemsPage()];
+  int count = 2;
   @override
   void initState() {
-    navIndex = 0;
-    isChecked = false;
-    selectedOption = "option1";
-    isEnabled = true;
+    super.initState();
+    count = 2;
+  }
+
+  void seeMoreFunc(length) {
+    if (count >= length) {
+      setState(() {
+        count = length;
+      });
+    } else {
+      setState(() {
+        if ((count + 2) > length) {
+          count = length;
+        } else {
+          // count += 2;
+          count = count + 2;
+        }
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    UserInfo? userData = ModalRoute.of(context)?.settings.arguments as UserInfo;
-
+    final theme = Theme.of(context);
     return Container(
-      child: Center(
+      width: MediaQuery.sizeOf(context).width,
+      margin: EdgeInsets.all(Helper.getResponsiveWidth(context, width: 16)),
+      child: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // // Checkbox - multiple selections
-            // Checkbox(
-            //   value: isChecked,
-            //   onChanged: (bool? value) {
-            //     setState(() {
-            //       isChecked = value ?? false;
-            //     });
-            //   },
-            // ),
-
-            // // Radio - single selection from group
-            Radio<String>(
-              value: 'option1',
-              groupValue: selectedOption,
-              onChanged: (String? value) {
-                setState(() {
-                  selectedOption = value;
-                  print(selectedOption);
-                });
-              },
+            // Replace Spacer() with SizedBox for fixed spacing
+            SizedBox(height: Helper.getResponsiveHeight(context, height: 24)),
+            Text(
+              "Discover your next favorite\nbook",
+              textAlign: TextAlign.left,
+              style: theme.textTheme.displayMedium,
             ),
-            Radio<String>(
-              value: 'option2',
-              groupValue: selectedOption,
-              onChanged: (String? value) {
-                setState(() {
-                  selectedOption = value;
-                  print(selectedOption);
-                });
-              },
-            ),
-            Radio<String>(
-              value: "Option23",
-              onChanged: (value) => setState(() {
-                selectedOption = value;
-              }),
-              groupValue: selectedOption,
-            ),
-            // Switch - on/off toggle
-            Switch(
-              value: isEnabled,
-              onChanged: (bool value) {
-                setState(() {
-                  isEnabled = value;
-                });
-              },
-            ),
-            AnimatedContainer(
-              duration: Duration(seconds: 1),
-
-              width: _isExpanded ? 100 : 200,
-              height: _isExpanded ? 100 : 200,
-              transform: _transformMatrix,
-              color: _isExpanded
-                  ? Colors.red
-                  : const Color.fromARGB(9, 33, 149, 243),
-              curve: Curves.linear,
-              // child: Center(child: Text('Animated!')),
-              child: Center(
-                child: Text(
-                  'Animated!',
-                  style: TextStyle(backgroundColor: Color(0xff000000)),
-                ),
+            SizedBox(height: Helper.getResponsiveHeight(context, height: 32)),
+            SizedBox(
+              width: MediaQuery.sizeOf(context).width,
+              height: Helper.getResponsiveHeight(context, height: 264),
+              child: ListView.builder(
+                itemExtent: Helper.getResponsiveWidth(context, width: 200),
+                scrollDirection: Axis.horizontal,
+                itemCount: books.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      print("Tapped on book ${index + 1}");
+                    },
+                    child: Container(
+                      width: Helper.getResponsiveWidth(context, width: 181),
+                      height: Helper.getResponsiveHeight(context, height: 240),
+                      margin: EdgeInsets.only(
+                        right: Helper.getResponsiveWidth(context, width: 16),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          books[index].coverImage,
+                          fit: BoxFit.fill,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              color: Colors.grey.shade300,
+                              child: Icon(
+                                Icons.book,
+                                size: 48,
+                                color: Colors.grey.shade600,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
+            SizedBox(height: Helper.getResponsiveHeight(context, height: 32)),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-            // Trigger animation
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _isExpanded = !_isExpanded;
-                });
-                _rotateContainer();
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Your favorites",
+                      textAlign: TextAlign.left,
+                      style: theme.textTheme.displayMedium,
+                    ),
+                    Text(
+                      "Your saved list of favorites",
+                      textAlign: TextAlign.left,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+
+                TextButton(
+                  onPressed: () {
+                    seeMoreFunc(books.length);
+                  },
+                  child: Text("See more", textAlign: TextAlign.start),
+                ),
+              ],
+            ),
+            SizedBox(height: Helper.getResponsiveHeight(context, height: 16)),
+            ListView.builder(
+              itemExtent: Helper.getResponsiveHeight(context, height: 210),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: count,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    print("Tapped on book ${index + 1}");
+                  },
+                  child: Container(
+                    width: Helper.getResponsiveWidth(context, width: 181),
+                    height: Helper.getResponsiveHeight(context, height: 210),
+                    margin: EdgeInsets.only(
+                      right: Helper.getResponsiveWidth(context, width: 16),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: CustomBookCard(bookInfo: books[index]),
+                    ),
+                  ),
+                );
               },
-              child: Text('Animate'),
             ),
           ],
         ),
