@@ -23,6 +23,7 @@
 // "${userData.userName[0].toUpperCase()}${userData.userName.substring(1).toLowerCase()}",
 // how to get the values of map and use it the list taile -> root_page.dart and read the map items
 // Expanded()
+// DropdownMenu() --> go to the search_screen.dart
 
 //see more logic
 // intial count -> 2 ( int count = 2;)
@@ -59,3 +60,24 @@
 // navigate to bookPage with pass arguments (book object)
 // apply the widgets that we build today 
 // apply the alert dialog and the showdialog
+
+
+//--------Lecture 6------------
+// state=data that changes
+// state management: manage the widgets debind on my states
+//-------create provider-------
+// install provider:
+//   -$ flutter pub add provider
+//   -https://pub.dev/packages/provider
+// intialize class provider using ChangeNotifier
+// intialize our private variables and access it with getter 
+// define the methods
+// recomended:---> study the equality
+// don't forget to add NotifyListenres() in the end of each method in the provider
+// add the provider in the runApp method in the main file
+// ChangeNotifierProvider(create: (context) => UserInformationProvider(),),
+// to use the provider (to just listen without changes): ----> watch
+//   -- context.watch<UserInformationProvider>().user 
+// to use the provider (to make changes): ----> read
+// put your widget in a consumer if you want it to rebuild automaticly when the data in the provider changed
+

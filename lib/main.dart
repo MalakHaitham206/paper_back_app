@@ -1,3 +1,5 @@
+import 'package:day2_course/providers/saved_items.dart';
+import 'package:day2_course/providers/user_information_provider.dart';
 import 'package:day2_course/screens/login_page.dart';
 import 'package:day2_course/screens/on_boarding.dart';
 import 'package:day2_course/screens/register_page.dart';
@@ -8,13 +10,24 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:day2_course/core/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
   runApp(
-    DevicePreview(
-      enabled: true,
-      builder: (context) => MyApp(), // Wrap your app
+    // ChangeNotifierProvider(
+    //   create: (context)=>SavedBooksList(),
+    //   child: DevicePreview(
+    //     enabled: true,
+    //     builder: (context) => MyApp(), // Wrap your app
+    //   ),
+    // ),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => SavedBooksList()),
+        ChangeNotifierProvider(create: (context) => UserInformationProvider()),
+      ],
+      child: MyApp(),
     ),
   );
 }

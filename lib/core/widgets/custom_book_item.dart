@@ -11,7 +11,7 @@ class CustomBookCard extends StatelessWidget {
     final theme = Theme.of(context);
     return SizedBox(
       width: Helper.getResponsiveWidth(context, width: 130),
-      height: Helper.getResponsiveHeight(context, height: 150),
+      height: Helper.getResponsiveHeight(context, height: 100),
       child: Card(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -22,8 +22,8 @@ class CustomBookCard extends StatelessWidget {
             Image.asset(
               bookInfo.coverImage,
               fit: BoxFit.cover,
-              width: Helper.getResponsiveWidth(context, width: 150),
-              height: Helper.getResponsiveHeight(context, height: 180),
+              width: Helper.getResponsiveWidth(context, width: 100),
+              height: Helper.getResponsiveHeight(context, height: 100),
               errorBuilder: (context, error, stackTrace) {
                 return Container(
                   width: Helper.getResponsiveWidth(context, width: 150),
@@ -53,24 +53,23 @@ class CustomBookCard extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment:
-                    CrossAxisAlignment.start, // <- no need for baseline here
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     bookInfo.title,
-                    style: theme.textTheme.displayMedium,
+                    style: theme.textTheme.displaySmall?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
                     softWrap: true,
                     overflow: TextOverflow.visible,
                   ),
-                  SizedBox(
-                    height: Helper.getResponsiveHeight(context, height: 2),
-                  ),
+
                   Text(
                     "by ${bookInfo.author}",
-                    style: theme.textTheme.titleMedium,
+                    style: theme.textTheme.bodyMedium,
                   ),
                   SizedBox(
-                    height: Helper.getResponsiveHeight(context, height: 10),
+                    height: Helper.getResponsiveHeight(context, height: 4),
                   ),
                   StarRating(rating: bookInfo.rate),
                 ],

@@ -15,6 +15,14 @@ class Book {
     required this.coverImage,
     required this.rate,
   });
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Book && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 List<Book> books = [

@@ -1,10 +1,12 @@
+import 'package:day2_course/model/book_model.dart';
+
 class UserInfo {
   int id;
   String userName;
   String? email;
   String? password;
-
-  var userImage;
+  String? userImage;
+  List<Book?> savedItems = [];
 
   UserInfo({
     required this.id,

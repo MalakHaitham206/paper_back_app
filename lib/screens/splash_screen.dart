@@ -1,7 +1,10 @@
 // import 'package:day2_course/screens/my_home_page.dart';
+import 'package:day2_course/providers/user_information_provider.dart';
 import 'package:day2_course/screens/on_boarding.dart';
+import 'package:day2_course/screens/root_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -43,7 +46,14 @@ class _SplashScreenState extends State<SplashScreen>
     if (mounted) {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => OnBoarding(),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            if (context.watch<UserInformationProvider>().user != null) {
+              return TheHomeRootPage();
+            } else {
+              return OnBoarding();
+            }
+          },
+
           // const MyHomePage(title: 'Flutter Demo Home Page'),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(opacity: animation, child: child);
@@ -64,6 +74,7 @@ class _SplashScreenState extends State<SplashScreen>
     final theme = Theme.of(context);
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: AnimatedBuilder(
         animation: _animationController,

@@ -1,7 +1,9 @@
 import 'package:day2_course/core/widgets/custom_text_field_section.dart';
 import 'package:day2_course/core/helper.dart';
 import 'package:day2_course/model/user_model.dart';
+import 'package:day2_course/providers/user_information_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -11,7 +13,10 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPage extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   bool rememberMe = false;
@@ -53,6 +58,7 @@ class _RegisterPage extends State<RegisterPage> {
                 ),
                 CustomTextFieldSection(
                   label: "UserName",
+                  controller: _userNameController,
                   placeholderText: "Enter your email",
                   icon: "assets/image/register_images/username_icon.svg",
                   type: "username",
@@ -69,6 +75,7 @@ class _RegisterPage extends State<RegisterPage> {
                 ),
                 CustomTextFieldSection(
                   label: "email",
+                  controller: _emailController,
                   placeholderText: "Enter your email",
                   icon: "assets/image/login_images/email_icon.svg",
                   type: "email",
@@ -116,6 +123,15 @@ class _RegisterPage extends State<RegisterPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        context.read<UserInformationProvider>().register(
+                          UserInfo(
+                            id: 0,
+                            userName: _userNameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          ),
+                        );
+
                         Navigator.of(
                           context,
                         ).pushNamed('home/', arguments: user);

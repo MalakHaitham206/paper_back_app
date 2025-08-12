@@ -130,7 +130,7 @@ class _MyHomePage extends State<MyHomePage> {
             ),
             SizedBox(height: Helper.getResponsiveHeight(context, height: 16)),
             ListView.builder(
-              itemExtent: Helper.getResponsiveHeight(context, height: 210),
+              itemExtent: Helper.getResponsiveHeight(context, height: 120),
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: count,
@@ -141,7 +141,7 @@ class _MyHomePage extends State<MyHomePage> {
                   },
                   child: Container(
                     width: Helper.getResponsiveWidth(context, width: 181),
-                    height: Helper.getResponsiveHeight(context, height: 210),
+                    height: Helper.getResponsiveHeight(context, height: 110),
                     margin: EdgeInsets.only(
                       right: Helper.getResponsiveWidth(context, width: 16),
                     ),

@@ -1,8 +1,10 @@
 import 'package:day2_course/core/widgets/custom_text_field_section.dart';
 import 'package:day2_course/core/helper.dart';
-import 'package:day2_course/model/user_model.dart';
+import 'package:day2_course/providers/user_information_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,6 +15,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool rememberMe = false;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -53,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                   placeholderText: "Enter your email",
                   icon: "assets/image/login_images/email_icon.svg",
                   type: "email",
+                  controller: _emailController,
                   validateFunction: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
@@ -65,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                   placeholderText: "Enter your password",
                   icon: "assets/image/login_images/pass_icon.svg",
                   type: "Password",
+                  controller: _passwordController,
                   validateFunction: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
@@ -125,10 +132,15 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).pushReplacementNamed(
-                          'home/',
-                          arguments: UserInfo(id: 200, userName: "nader"),
-                        );
+                        // context
+                        //     .read<UserInformationProvider>()
+                        //     .initializeWithTestUsers();
+                        if (context.read<UserInformationProvider>().login(
+                          mail: _emailController.text,
+                          pass: _passwordController.text,
+                        )) {
+                          Navigator.of(context).pushReplacementNamed('home/');
+                        }
                       }
                     },
                     child: Padding(
