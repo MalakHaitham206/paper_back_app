@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 
 class CustomBookCard extends StatelessWidget {
   final Book bookInfo;
-  const CustomBookCard({super.key, required this.bookInfo});
+  final Future<void> Function() onFavoriteToggle;
+  const CustomBookCard({
+    super.key,
+    required this.bookInfo,
+    required this.onFavoriteToggle,
+  });
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -19,8 +24,8 @@ class CustomBookCard extends StatelessWidget {
           textBaseline: TextBaseline.alphabetic,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              bookInfo.coverImage,
+            Image.network(
+              bookInfo.imageUrl,
               fit: BoxFit.cover,
               width: Helper.getResponsiveWidth(context, width: 100),
               height: Helper.getResponsiveHeight(context, height: 100),
@@ -48,6 +53,7 @@ class CustomBookCard extends StatelessWidget {
                 );
               },
             ),
+
             SizedBox(width: Helper.getResponsiveWidth(context, width: 8)),
             Expanded(
               child: Column(
@@ -71,7 +77,7 @@ class CustomBookCard extends StatelessWidget {
                   SizedBox(
                     height: Helper.getResponsiveHeight(context, height: 4),
                   ),
-                  StarRating(rating: bookInfo.rate),
+                  StarRating(rating: bookInfo.rating),
                 ],
               ),
             ),

@@ -6,6 +6,7 @@ import 'package:day2_course/providers/user_information_provider.dart';
 import 'package:day2_course/screens/login_page.dart';
 import 'package:day2_course/screens/my_home_page.dart';
 import 'package:day2_course/screens/profile_page.dart';
+import 'package:day2_course/screens/saved_books.dart';
 import 'package:day2_course/screens/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class _RootPage extends State<TheHomeRootPage> {
   ];
 
   int navIndex = 0;
-  List<Widget> pages = [MyHomePage(), SearchPage()];
+  List<Widget> pages = [MyHomePage(), SavedItemsPage(), SearchPage()];
 
   @override
   void initState() {

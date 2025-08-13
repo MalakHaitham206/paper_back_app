@@ -1,4 +1,5 @@
-import 'package:day2_course/providers/saved_items.dart';
+import 'package:day2_course/providers/books_provider.dart';
+import 'package:day2_course/providers/reading_provider.dart';
 import 'package:day2_course/providers/user_information_provider.dart';
 import 'package:day2_course/screens/login_page.dart';
 import 'package:day2_course/screens/on_boarding.dart';
@@ -24,8 +25,9 @@ void main() {
     // ),
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => SavedBooksList()),
+        ChangeNotifierProvider(create: (context) => BooksProvider()),
         ChangeNotifierProvider(create: (context) => UserInformationProvider()),
+        ChangeNotifierProvider(create: (context) => ReadingProvider()),
       ],
       child: MyApp(),
     ),
